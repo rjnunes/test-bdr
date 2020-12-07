@@ -1,12 +1,13 @@
 {
-  "name": "application-name",
-  "version": "0.0.1",
-  "private": true,
+  "name": "node-react",
+  "version": "1.0.0",
   "scripts": {
-    "start": "nodejs ./bin/www"
+    "client": "cd client && npm start",
+    "server": "node server.js",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
   },
   "dependencies": {
-    "express": "~4.0.0",
+    "express": "^4.16.2",
     "static-favicon": "~1.0.0",
     "morgan": "~1.0.0",
     "cookie-parser": "~1.0.1",
@@ -14,5 +15,8 @@
     "debug": "~0.7.4",
     "hjs": "~0.0.6",
     "less-middleware": "0.1.15"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.0"
   }
 }
