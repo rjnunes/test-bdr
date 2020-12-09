@@ -48,9 +48,17 @@ updateAluno = async (req, res) => {
                 message: 'Aluno não encontrado!',
             });
         }
-        aluno.nome = body.nome;
-        aluno.email = body.email;
-        aluno.dataNascimento = body.dataNascimento;
+        
+        if (body.nome) {
+            aluno.nome = body.nome;
+        }
+        if (body.email) {
+            aluno.email = body.email;
+        }
+        if (body.dataNascimento) {
+            aluno.dataNascimento = body.dataNascimento;
+        }
+        
         aluno
             .save()
             .then(() => {
@@ -70,20 +78,20 @@ updateAluno = async (req, res) => {
 };
 
 deleteAluno = async (req, res) => {
-    await Aluno.findOneAndDelete({ _id: req.params.id }, (err, aluno) => {
-        if (err) {
-            return res.status(400).json({ success: false, error: err })
-        }
-
-        if (!aluno) {
-            return res.status(404).json({ 
-                success: false, 
-                error: 'Aluno não encontrado!'
-            })
-        }
-
-        return res.status(200).json({ success: true, data: aluno })
-    }).catch(err => console.log(err))
+    await Aluno.findOneAndDelete({ _id: req.params.id }, {})
+        .then(aluno => {
+            if (aluno) {
+                return res.status(200).json({ success: true, data: aluno, message: "Aluno deletado" })
+            } else {
+                return res.status(404).json({ 
+                    success: false, 
+                    error: 'Aluno não encontrado!'
+                })
+            }
+        })
+        .catch(err => {
+            return res.status(422).json({ success: false, error: err })
+        })
 };
 
 getAlunoById = async (req, res) => {
