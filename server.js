@@ -5,6 +5,7 @@ const app = express();
 const apiPort = 5000;
 
 const alunoRouter = require('./routes/aluno.router');
+const cursoRouter = require('./routes/curso.router');
 const db = require('./db');
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -18,6 +19,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/v1', alunoRouter)
+app.use('/api/v1', cursoRouter)
 
 app.get('/api/mensagem', (req, res) => {
   res.send({ express: 'Hello From Express' });
